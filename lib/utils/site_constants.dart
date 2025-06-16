@@ -1,0 +1,3 @@
+const SITE_MIN_WIDTH = 767;
+
+const SITE_MAX_WIDTH = 992;
