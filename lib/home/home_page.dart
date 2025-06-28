@@ -4,6 +4,7 @@ import 'package:sunpower_website/home/widgets/features_section_widgets.dart';
 import 'package:sunpower_website/home/widgets/home_app_bar.dart';
 import 'package:sunpower_website/home/widgets/main_categories_widget.dart';
 
+import 'widgets/image_slider.dart';
 import 'widgets/sub_pages_app_bar.dart';
 import 'widgets/vision_section_widget.dart';
 
@@ -53,7 +54,14 @@ class _HomePageState extends State<HomePage> {
           ListView(
             controller: _scrollController,
             children: [
-              SubPageAppBar(),
+              Stack(
+                children: [
+                  HomePageImageSlider(),
+                  SubPageAppBar()
+                ],
+              ),
+
+              // SubPageAppBar(),
               /*SliverPersistentHeader(
                 pinned: true,
                 delegate: _StickyHeaderDelegate(

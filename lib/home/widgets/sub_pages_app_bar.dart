@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sunpower_website/home/widgets/image_slider.dart';
+import 'package:sunpower_website/product_list/product_list_page.dart';
 import 'package:sunpower_website/utils/AppColors.dart';
 import 'package:sunpower_website/widgets/social_media_button.dart';
 
@@ -15,110 +16,108 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
   @override
   Widget build(BuildContext context) {
     //final double toolBarHeight = 700;
-    return SizedBox(
-      //height: toolBarHeight,
-      child: Stack(
-        children: [
-          HomePageImageSlider(),
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Image.asset('assets/images/nag-ofirmie.jpg',fit: BoxFit.cover,),
-          // ),
-          Stack(
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.black,Colors.transparent],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                )
+            ),
+            width: MediaQuery.of(context).size.width,
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+              horizontal: MediaQuery.of(context).size.width * 0.05,
+              vertical: 24
+          ),
+          child: Column(
             children: [
-              Positioned.fill(
-                child: Container(
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.black,Colors.transparent],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                      )
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SocialMediaButton(
+                    socialType: 'Youtube',
+                    link: '',
                   ),
-                  width: MediaQuery.of(context).size.width,
-                ),
+                  const SizedBox(width: 24,),
+                  SocialMediaButton(
+                    socialType: 'Facebook',
+                    link: '',
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.05,
-                  vertical: 24
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              Divider(
+                thickness: 1.5,
+                color: Colors.white24,
+              ),
+              Row(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Image.asset(
+                        "assets/icons/logo_icon.png",
+                        width: 200,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 48,),
+                  Expanded(
+                    flex: 2,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
-                        SocialMediaButton(
-                          socialType: 'Youtube',
-                          link: '',
+                        IconButton(
+                            onPressed: (){
+                              GoRouter.of(context).go('/');
+                            },
+                            icon: Container(
+                                width: 24,
+                                height: 24,
+                                decoration: BoxDecoration(
+                                    color: AppColors.primaryColor,
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                child: Center(
+                                    child: Icon(Icons.home,size: 16,color: Colors.white,)
+                                )
+                            )
                         ),
-                        const SizedBox(width: 24,),
-                        SocialMediaButton(
-                          socialType: 'Facebook',
-                          link: '',
+                        AppBarButton(name: 'Home',),
+                        //AppBarButton(name: 'About Us',),
+                        AppBarButton(name: 'Contact Us',),
+                        AppBarButton(
+                          name: 'Products',
+                          onPressed: (){
+                            GoRouter.of(context).push('/products');
+                            // Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                            //   return ProductListPage();
+                            // }));
+                          },
                         ),
                       ],
                     ),
-                    Divider(
-                      thickness: 1.5,
-                      color: Colors.white24,
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Image.asset(
-                                "assets/icons/logo_icon.png",
-                              width: 200,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 48,),
-                        Expanded(
-                          flex: 2,
-                          child: Wrap(
-                            direction: Axis.horizontal,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              IconButton(
-                                  onPressed: (){
-                                    GoRouter.of(context).go('/');
-                                  },
-                                  icon: Container(
-                                      width: 24,
-                                      height: 24,
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryColor,
-                                        borderRadius: BorderRadius.circular(5)
-                                      ),
-                                      child: Center(
-                                          child: Icon(Icons.home,size: 16,color: Colors.white,)
-                                      )
-                                  )
-                              ),
-                              AppBarButton(name: 'Home',),
-                              //AppBarButton(name: 'About Us',),
-                              AppBarButton(name: 'Contact Us',),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
+                  ),
+                ],
+              )
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }
 class AppBarButton extends StatefulWidget {
   final String name;
   final bool smallButton;
-  const AppBarButton({super.key, required this.name, this.smallButton = false});
+  final VoidCallback? onPressed;
+  const AppBarButton({super.key, required this.name, this.smallButton = false, this.onPressed});
 
   @override
   State<AppBarButton> createState() => _AppBarButtonState();
@@ -136,7 +135,7 @@ class _AppBarButtonState extends State<AppBarButton> {
         if(hovered)
           AnimatedButtonWidget(height: 20, width: widget.name.length * 10 ),
         TextButton(
-            onPressed: (){},
+            onPressed: widget.onPressed,
             onHover: (value){
               setState(() {
                 hovered = value;

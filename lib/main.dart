@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'home/home_page.dart';
+import 'product_list/product_list_page.dart';
 import 'utils/AppColors.dart';
 
 void main() {
@@ -17,11 +18,19 @@ class MyApp extends StatelessWidget {
       initialLocation: '/',
       routes: [
         GoRoute(
-            path: '/',
+          path: '/',
           builder: (context,state){
               return HomePage();
-          }
-        )
+            },
+          routes: [
+            GoRoute(
+                path: 'products',
+              builder: (context,state){
+                  return ProductListPage();
+              }
+            )
+          ]
+            )
 
       ]
   );
