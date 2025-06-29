@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sunpower_website/models/product.dart';
 import 'package:sunpower_website/utils/AppColors.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({super.key});
+  final Product product;
+  const ProductCard({super.key, required this.product});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -40,7 +42,8 @@ class _ProductCardState extends State<ProductCard> {
           children: [
             Expanded(
               child: Image.network(
-                "https://firebasestorage.googleapis.com/v0/b/baharka-library-e410f.appspot.com/o/ProductImg%2F2023-02-08%2015%3A34%3A02.582?alt=media&token=73f12a37-f8fd-41d8-b5c1-cc53b3eb7534",
+                widget.product.image.first,
+                // "https://firebasestorage.googleapis.com/v0/b/baharka-library-e410f.appspot.com/o/ProductImg%2F2023-02-08%2015%3A34%3A02.582?alt=media&token=73f12a37-f8fd-41d8-b5c1-cc53b3eb7534",
                 fit: BoxFit.contain,
               ),
             ),
@@ -54,7 +57,8 @@ class _ProductCardState extends State<ProductCard> {
                       milliseconds: 400
                     ),
                     child: Text(
-                      "Number Plate Lamp Red - Bulb - Made in Poland",
+                      widget.product.name,
+                      // "Number Plate Lamp Red - Bulb - Made in Poland",
                       style: TextStyle(
                           fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -65,7 +69,8 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                   const SizedBox(height: 12,),
                   Text(
-                    "Number Plate Lamp Red - Bulb - Made in Poland",
+                    widget.product.itemCode,
+                    // "Number Plate Lamp Red - Bulb - Made in Poland",
                     style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold
