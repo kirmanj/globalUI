@@ -9,72 +9,60 @@ class CategoryCardWidget extends StatefulWidget {
 }
 
 class _CategoryCardWidgetState extends State<CategoryCardWidget> {
-
   bool _isHover = false;
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: (){
+      onTap: () {
         setState(() {
           _isHover = !_isHover;
           print(_isHover);
         });
       },
-      onHover: (value){
+      onHover: (value) {
         setState(() {
           _isHover = value;
           print(_isHover);
         });
       },
       child: AnimatedContainer(
+        height: height * 0.1,
         color: _isHover ? Colors.white : widget.color,
-        duration: Duration(
-          milliseconds: 400
-        ),
+        duration: Duration(milliseconds: 400),
         child: Stack(
           children: [
             PositionedDirectional(
               top: 16,
-                start: 16,
-                child: AnimatedContainer(
-                    duration: Duration(milliseconds: 400),
-                  width: _isHover ? 100 : 0,
-                  height: _isHover ? 200 : 0,
-                  decoration: BoxDecoration(
-                    border: BorderDirectional(
-                      top: BorderSide(
-                        color: widget.color,
-                        width: 1
-                      ),
-                      start: BorderSide(
-                          color: widget.color,
-                          width: 1
-                      ),
-                    )
+              start: 16,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                width: _isHover ? 100 : 0,
+                height: _isHover ? 200 : 0,
+                decoration: BoxDecoration(
+                  border: BorderDirectional(
+                    top: BorderSide(color: widget.color, width: 1),
+                    start: BorderSide(color: widget.color, width: 1),
                   ),
-                )
+                ),
+              ),
             ),
             PositionedDirectional(
-                bottom: 16,
-                end: 16,
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
-                  width: _isHover ? 200 : 0,
-                  height: _isHover ? 100 : 0,
-                  decoration: BoxDecoration(
-                      border: BorderDirectional(
-                        bottom: BorderSide(
-                            color: widget.color,
-                            width: 1
-                        ),
-                        end: BorderSide(
-                            color: widget.color,
-                            width: 1
-                        ),
-                      )
+              bottom: 16,
+              end: 16,
+              child: AnimatedContainer(
+                duration: Duration(milliseconds: 400),
+                width: _isHover ? 200 : 0,
+                height: _isHover ? 100 : 0,
+                decoration: BoxDecoration(
+                  border: BorderDirectional(
+                    bottom: BorderSide(color: widget.color, width: 1),
+                    end: BorderSide(color: widget.color, width: 1),
                   ),
-                )
+                ),
+              ),
             ),
             Positioned.fill(
               child: Column(
@@ -94,9 +82,8 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
                   Text(
                     "Warning lamps",
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                      color: _isHover ? Colors.black54 : Colors.white
+                      fontSize: 16,
+                      color: _isHover ? Colors.black54 : Colors.white,
                     ),
                   ),
                   Container(
@@ -104,11 +91,11 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
                     height: 40,
                     color: Colors.black,
                     alignment: Alignment.center,
-                    child: Text("See more",style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white
-                    ),),
-                  )
+                    child: Text(
+                      "See more",
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             ),

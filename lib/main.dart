@@ -9,9 +9,7 @@ import 'utils/AppColors.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -19,23 +17,23 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final GoRouter _router = GoRouter(
-      initialLocation: '/',
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context,state){
-              return HomePage();
+    initialLocation: '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) {
+          return HomePage();
+        },
+        routes: [
+          GoRoute(
+            path: 'products',
+            builder: (context, state) {
+              return ProductListPage();
             },
-          routes: [
-            GoRoute(
-                path: 'products',
-              builder: (context,state){
-                  return ProductListPage();
-              }
-            )
-          ]
-        )
-      ]
+          ),
+        ],
+      ),
+    ],
   );
 
   // This widget is the root of your application.
@@ -43,16 +41,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       routerConfig: _router,
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Auto Truck Store',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor).copyWith(
-              primary: AppColors.primaryColor,
-              onPrimary: Colors.white
-          ),
-          fontFamily: 'AutoTruck',
-          fontFamilyFallback: [
-            'OpenSans'
-          ]
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primaryColor,
+        ).copyWith(primary: AppColors.primaryColor, onPrimary: Colors.white),
+        fontFamily: 'AutoTruck',
+        fontFamilyFallback: ['OpenSans'],
       ),
       // home: const HomePage(),
     );

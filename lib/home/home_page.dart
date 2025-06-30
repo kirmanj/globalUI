@@ -16,7 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final ScrollController _scrollController = ScrollController();
   bool _showSecondSection = false;
 
@@ -54,12 +53,7 @@ class _HomePageState extends State<HomePage> {
           ListView(
             controller: _scrollController,
             children: [
-              Stack(
-                children: [
-                  HomePageImageSlider(),
-                  SubPageAppBar()
-                ],
-              ),
+              Stack(children: [HomePageImageSlider(), SubPageAppBar()]),
 
               // SubPageAppBar(),
               /*SliverPersistentHeader(
@@ -77,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),*/
-
               AboutUs(),
               MainCategoriesWidget(),
               FeaturesSectionWidgets(),
@@ -85,7 +78,7 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: 1500,
                 //color: Color.fromARGB(255, 242, 242, 242),
-              )
+              ),
             ],
           ),
           AnimatedPositioned(
@@ -96,11 +89,54 @@ class _HomePageState extends State<HomePage> {
             right: 0,
             child: AppBarSubView(),
           ),
+
+          if (_showSecondSection)
+            Positioned(
+              bottom: 32,
+              right: 32,
+              child: GestureDetector(
+                onTap: () {
+                  _scrollController.animateTo(
+                    0,
+                    duration: const Duration(milliseconds: 500),
+                    curve: Curves.easeInOut,
+                  );
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
+                  color: Colors.black87.withAlpha(150),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.keyboard_arrow_up_outlined,
+                          color: Colors.white,
+                          size: 12,
+                        ),
+                        Text(
+                          "Top",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );
   }
 }
+
 class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
@@ -119,7 +155,11 @@ class _StickyHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => maxHeight;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return child;
   }
 

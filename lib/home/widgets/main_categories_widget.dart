@@ -11,7 +11,6 @@ class MainCategoriesWidget extends StatefulWidget {
 }
 
 class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
-
   final List<Color> _colors = [
     Color(0xffe30f3a),
     Color(0xffef7a1f),
@@ -27,56 +26,52 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
     Color(0xfff4991d),
     Color(0xffa26537),
     Color(0xfffb62c7),
-    Color(0xffffffff)
+    Color(0xffffffff),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "10 Main Categories of Auto Truck Store",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 62,
-            color: Color.fromARGB(255, 45, 45, 45),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 38,),
-        LayoutBuilder(
-          builder: (context,constraints) {
-            int _itemCount = 6;
-            print(constraints.maxWidth);
-            if(constraints.maxWidth < SITE_MIN_WIDTH){
-              _itemCount = 2;
-            }
-            else if(constraints.maxWidth < SITE_MAX_WIDTH){
-              _itemCount = 3;
-            } else {
-              _itemCount = 6;
-            }
-            return GridView.builder(
-              itemCount: _colors.length,
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: _itemCount,
-                    mainAxisSpacing: 1,
-                    crossAxisSpacing: 1,
-                  childAspectRatio: _itemCount == 2 ? 1 :
-                  (MediaQuery.of(context).size.width / _itemCount ) /
-                      ((MediaQuery.of(context).size.width / _itemCount ) * 2)
-                ),
-                itemBuilder: (context,index){
-                  return CategoryCardWidget(
-                    color: _colors[index%_colors.length],
-                  );
-                }
-            );
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: height * 1.2,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          int _itemCount = 6;
+          double availableHeight = height * 1.2;
+
+          double itemWidth = constraints.maxWidth / 6; // Default column count
+
+          print(constraints.maxWidth);
+          if (constraints.maxWidth < SITE_MIN_WIDTH) {
+            _itemCount = 2;
+          } else if (constraints.maxWidth < SITE_MAX_WIDTH) {
+            _itemCount = 3;
+          } else {
+            _itemCount = 6;
           }
-        )
-      ],
+
+          itemWidth = constraints.maxWidth / _itemCount;
+          double itemHeight = availableHeight / 3; // Exactly 3 rows
+          double aspectRatio = itemWidth / itemHeight;
+
+          return GridView.builder(
+            itemCount: _colors.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(), // Prevent scroll
+
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: _itemCount,
+              mainAxisSpacing: 1,
+              crossAxisSpacing: 1,
+              childAspectRatio: aspectRatio,
+            ),
+            itemBuilder: (context, index) {
+              return CategoryCardWidget(color: _colors[index % _colors.length]);
+            },
+          );
+        },
+      ),
     );
   }
 }

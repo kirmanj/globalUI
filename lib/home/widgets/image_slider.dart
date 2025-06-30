@@ -10,39 +10,68 @@ class HomePageImageSlider extends StatefulWidget {
 }
 
 class _HomePageImageSliderState extends State<HomePageImageSlider> {
-
   final List<String> imgList = [
     'assets/images/home_slider_0.jpg',
     'assets/images/home_slider_1.jpg',
     'assets/images/home_slider_2.jpg',
     'assets/images/home_slider_3.jpg',
-    'assets/images/home_slider_4.jpg'
+    'assets/images/home_slider_4.jpg',
   ];
 
+  int _currentIndex = 0;
+  int _animationIndex = 0;
 
-  final CarouselSliderController _carouselSliderController = CarouselSliderController();
+  final CarouselSliderController _carouselSliderController =
+      CarouselSliderController();
 
   @override
   Widget build(BuildContext context) {
-    final double toolBarHeight = MediaQuery.of(context).size.width * (1000/1920);
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Column(
       children: [
         SizedBox(
-          height: toolBarHeight,
-          width: MediaQuery.of(context).size.width,
+          height: height * 0.8,
+          width: width,
           child: Stack(
             children: [
-              CarouselSlider(
-                carouselController: _carouselSliderController,
-                disableGesture: true,
-                items: imgList.map<Widget>((e){
-                  return Image.asset(e,fit: BoxFit.cover,);
-                }).toList(),
-                options: CarouselOptions(
-                  height: toolBarHeight,
-                  viewportFraction: 1,
-                  scrollPhysics: NeverScrollableScrollPhysics()
-                ),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 800),
+                switchInCurve: Curves.easeInOut,
+                transitionBuilder: (child, animation) {
+                  if (_animationIndex == 0) {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: Offset(0, 1),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    );
+                  } else if (_animationIndex == 1) {
+                    return MosaicImageReveal(
+                      key: ValueKey<int>(_currentIndex),
+                      imagePath: imgList[_currentIndex],
+                    );
+                  } else {
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: Offset(0, -1),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: child,
+                    );
+                  }
+                },
+                child:
+                    _animationIndex == 1
+                        ? const SizedBox.shrink()
+                        : Image.asset(
+                          imgList[_currentIndex],
+                          key: ValueKey<int>(_currentIndex),
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                        ),
               ),
               Positioned(
                 left: 0,
@@ -52,11 +81,20 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                        onPressed: (){
-                          _carouselSliderController.previousPage();
-                        },
-                        icon: Icon(Icons.arrow_back_ios_outlined , color: Colors.white,size: 50,)
-                    )
+                      onPressed: () {
+                        setState(() {
+                          _currentIndex =
+                              (_currentIndex - 1 + imgList.length) %
+                              imgList.length;
+                          _animationIndex = (_animationIndex + 1) % 3;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios_outlined,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -68,37 +106,133 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     IconButton(
-                        onPressed: (){
-                          _carouselSliderController.nextPage();
-                        },
-                        icon: Icon(Icons.arrow_forward_ios_outlined, color: Colors.white,size: 50,)
-                    )
+                      onPressed: () {
+                        setState(() {
+                          _currentIndex = (_currentIndex + 1) % imgList.length;
+                          _animationIndex = (_animationIndex + 1) % 3;
+                        });
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios_outlined,
+                        color: Colors.white,
+                        size: 50,
+                      ),
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 12,),
+        const SizedBox(height: 8),
         SizedBox(
-            height: (MediaQuery.of(context).size.width/5)*(9/16),
-            child: ListView.builder(
-                itemCount: imgList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context,index){
-                  return ButtonImage(
-                    image: Image.asset(
-                      imgList[index],
-                      fit: BoxFit.cover,
-                    ),
-                    onTap: () {
-                      _carouselSliderController.jumpToPage(index);
-                    },
-                  );
-                }
-            )
-        )
+          height: height * 0.2,
+          width: width,
+          child: ListView.builder(
+            itemCount: imgList.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _currentIndex = index;
+                    _animationIndex = (_animationIndex + 1) % 3;
+                  });
+                },
+                child: Container(
+                  width: width / imgList.length,
+                  margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                  child: Image.asset(imgList[index], fit: BoxFit.cover),
+                ),
+              );
+            },
+          ),
+        ),
       ],
+    );
+  }
+}
+
+class MosaicImageReveal extends StatefulWidget {
+  final String imagePath;
+  const MosaicImageReveal({super.key, required this.imagePath});
+
+  @override
+  State<MosaicImageReveal> createState() => _MosaicImageRevealState();
+}
+
+class _MosaicImageRevealState extends State<MosaicImageReveal>
+    with TickerProviderStateMixin {
+  late List<AnimationController> _controllers;
+  final int rows = 6;
+  final int cols = 10;
+
+  @override
+  void initState() {
+    super.initState();
+    _controllers = List.generate(
+      rows * cols,
+      (_) => AnimationController(
+        vsync: this,
+        duration: Duration(milliseconds: 600),
+      )..forward(),
+    );
+  }
+
+  @override
+  void dispose() {
+    for (final c in _controllers) {
+      c.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height * 0.8;
+
+    return SizedBox(
+      width: screenWidth,
+      height: screenHeight,
+      child: Stack(
+        children: List.generate(rows * cols, (index) {
+          int row = index ~/ cols;
+          int col = index % cols;
+
+          double tileWidth = screenWidth / cols;
+          double tileHeight = screenHeight / rows;
+
+          return AnimatedBuilder(
+            animation: _controllers[index],
+            builder: (context, child) {
+              return Positioned(
+                top: row * tileHeight,
+                left: col * tileWidth,
+                child: Opacity(
+                  opacity: _controllers[index].value,
+                  child: ClipRect(
+                    child: Align(
+                      alignment: Alignment(
+                        -1 + (2 * col / (cols - 1)),
+                        -1 + (2 * row / (rows - 1)),
+                      ),
+                      widthFactor: 1 / cols,
+                      heightFactor: 1 / rows,
+                      child: Image.asset(
+                        widget.imagePath,
+                        width: screenWidth,
+                        height: screenHeight,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          );
+        }),
+      ),
     );
   }
 }
