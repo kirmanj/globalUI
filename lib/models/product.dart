@@ -10,6 +10,7 @@ class Product {
   double costPrice;
   String itemCode;
   String brand;
+  String? subCategory;
   int quantity;
   final doc;
   List<String> image;
@@ -36,6 +37,7 @@ class Product {
     required this.isNew,
     required this.newArrival,
     required this.active,
+    this.subCategory,
     this.oldPrice
   });
 
@@ -58,6 +60,7 @@ class Product {
       isNew: (doc.data()! as Map)['isNew']??false,
       newArrival: (doc.data()! as Map)['newArrival']??false,
       active: (doc.data()! as Map)['active']??false,
+      subCategory: (doc.data()! as Map)['subCategory']
     );
   }
 
@@ -100,6 +103,14 @@ class Product {
 
   };
 
+
+  String get price {
+    if(oldPrice == null || oldPrice == 0.0){
+      return retailPrice.toString();
+    }
+    return oldPrice.toString();
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -107,4 +118,6 @@ class Product {
 
   @override
   int get hashCode => id.hashCode;
+
+
 }

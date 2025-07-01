@@ -26,15 +26,11 @@ class _ProductCardState extends State<ProductCard> {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(
-            color: hover ? Colors.black : Colors.transparent,
-            width: 0.8,
-          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 1,
-              spreadRadius: 0.5
+                color: hover ? AppColors.primaryColor.withAlpha(100) : Colors.black12,
+                spreadRadius: 1,
+                blurRadius: 5
             )
           ]
         ),
@@ -47,10 +43,12 @@ class _ProductCardState extends State<ProductCard> {
                 fit: BoxFit.contain,
               ),
             ),
-            const SizedBox(width: 16,),
+            const SizedBox(width: 8,),
             Expanded(
               // flex: 2,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   AnimatedContainer(
                     duration: Duration(
@@ -65,9 +63,9 @@ class _ProductCardState extends State<ProductCard> {
                         color: hover ? AppColors.primaryColor : Colors.black
                       ),
                       maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const SizedBox(height: 12,),
                   Text(
                     widget.product.itemCode,
                     // "Number Plate Lamp Red - Bulb - Made in Poland",
@@ -75,22 +73,34 @@ class _ProductCardState extends State<ProductCard> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold
                     ),
-                    maxLines: 2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  Expanded(
+                  Text(
+                    widget.product.price+"\$",
+                    // "Number Plate Lamp Red - Bulb - Made in Poland",
+                    style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      color: Colors.blue
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  /*Expanded(
                     child: SizedBox(
                       // color: Colors.black,
                       width: double.infinity,
-                      child: Column(
+                      *//*child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                              vertical: 16
+                              vertical: 8
                             ),
                             child: Container(
-                              height: 35,
+                              height: 30,
                               decoration: BoxDecoration(
                                 color: AppColors.primaryColor,
                                 borderRadius: BorderRadiusDirectional.only(
@@ -102,13 +112,13 @@ class _ProductCardState extends State<ProductCard> {
                                 horizontal: 16,
                                 vertical: 8
                               ),
-                              child: Text("See Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14,color: Colors.white),),
+                              child: Text("See Details",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10,color: Colors.white),),
                             ),
                           )
                         ],
-                      ),
+                      ),*//*
                     ),
-                  )
+                  )*/
                 ],
               ),
             )

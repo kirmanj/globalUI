@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CategoryCardWidget extends StatefulWidget {
   final Color color;
@@ -9,6 +10,7 @@ class CategoryCardWidget extends StatefulWidget {
 }
 
 class _CategoryCardWidgetState extends State<CategoryCardWidget> {
+
   bool _isHover = false;
 
   @override
@@ -16,11 +18,13 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: () {
-        setState(() {
-          _isHover = !_isHover;
-          print(_isHover);
-        });
+      onTap: (){
+       // GoRouter.of(context).push('location');
+        GoRouter.of(context).push('/products', extra:widget.color);
+        // setState(() {
+        //   _isHover = !_isHover;
+        //   print(_isHover);
+        // });
       },
       onHover: (value) {
         setState(() {

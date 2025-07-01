@@ -17,23 +17,23 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/',
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) {
-          return HomePage();
-        },
-        routes: [
-          GoRoute(
-            path: 'products',
-            builder: (context, state) {
-              return ProductListPage();
+      initialLocation: '/',
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context,state){
+              return HomePage();
             },
-          ),
-        ],
-      ),
-    ],
+          routes: [
+            GoRoute(
+                path: 'products',
+                builder: (context,state){
+                  return ProductListPage(backgroundColor: state.extra as Color,);
+                }
+            )
+          ]
+        )
+      ]
   );
 
   // This widget is the root of your application.

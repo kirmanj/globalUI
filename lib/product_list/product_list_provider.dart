@@ -9,7 +9,10 @@ class ProductListProvider extends ChangeNotifier{
   List<Product>? products;
 
   getProducts() async {
-    var result = await productsCollection.limit(10).get();
+    var result = await productsCollection
+        .where("categoryID",isEqualTo: "477d53d0-bda6-11ed-af13-1569568464b7")
+        .limit(30)
+        .get();
 
     products = result.docs.map<Product>((e) => Product.fromDoc(e)).toList();
 
