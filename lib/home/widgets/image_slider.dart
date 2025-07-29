@@ -134,6 +134,20 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
             itemCount: imgList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
+              return ButtonImage(
+                onTap: (){
+                  setState(() {
+                    _currentIndex = index;
+                    _animationIndex = (_animationIndex + 1) % 3;
+                  });
+                },
+                image: Container(
+                  width: width / imgList.length,
+                  margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                  child: Image.asset(imgList[index], fit: BoxFit.cover),
+                ),
+              );
+
               return InkWell(
                 onTap: () {
                   setState(() {

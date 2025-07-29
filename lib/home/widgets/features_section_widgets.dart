@@ -13,7 +13,7 @@ class _FeaturesSectionWidgetsState extends State<FeaturesSectionWidgets> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      height: height * 0.7,
+      // height: height * 0.7,
       color: Colors.white,
       child: Padding(
         padding: EdgeInsets.symmetric(

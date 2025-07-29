@@ -72,7 +72,7 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         ),
                       ),
                       AppBarButton(name: 'Home', smallButton: true),
-                      AppBarButton(name: 'About Us', smallButton: true),
+                      // AppBarButton(name: 'About Us', smallButton: true),
                       AppBarButton(name: 'Contact Us', smallButton: true),
                     ],
                   ),

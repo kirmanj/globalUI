@@ -22,6 +22,7 @@ class _FooterWidgetState extends State<FooterWidget> {
           child: Image.asset("assets/images/footer.jpg", fit: BoxFit.cover),
         ),
         Container(
+          width: MediaQuery.of(context).size.width,
           // color: AppColors.primaryColor, //Colors.black,
           // height: 500,
           decoration: BoxDecoration(

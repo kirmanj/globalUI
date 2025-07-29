@@ -16,6 +16,24 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
   @override
   Widget build(BuildContext context) {
     //final double toolBarHeight = 700;
+    final double width = MediaQuery.of(context).size.width;
+
+    if (width < 550){
+      return Container(
+        color: Colors.black,
+        padding: EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+                "assets/icons/logo_icon.png",
+              width: 150,
+            )
+          ],
+        ),
+      );
+    }
+
     return Stack(
       children: [
         Positioned.fill(

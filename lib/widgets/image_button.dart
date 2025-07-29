@@ -23,10 +23,11 @@ class _ButtonImageState extends State<ButtonImage> {
       onTap: widget.onTap,
       child: Stack(
         children: [
-          AspectRatio(
-            aspectRatio: 16/9,
-            child: widget.image
-          ),
+          widget.image,
+          // AspectRatio(
+          //   aspectRatio: 16/9,
+          //   child: widget.image
+          // ),
           Positioned.fill(
             child: AnimatedContainer(
                 duration: Duration(milliseconds: 300),
