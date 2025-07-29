@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sunpower_website/models/category.dart';
 
 class CategoryCardWidget extends StatefulWidget {
   final Color color;
-  const CategoryCardWidget({super.key, required this.color});
+  final int index;
+  final CategoryModel category;
+  const CategoryCardWidget({super.key, required this.color, required this.index, required this.category});
 
   @override
   State<CategoryCardWidget> createState() => _CategoryCardWidgetState();
@@ -16,20 +19,13 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: (){
-       // GoRouter.of(context).push('location');
-        GoRouter.of(context).push('/products', extra:widget.color);
-        // setState(() {
-        //   _isHover = !_isHover;
-        //   print(_isHover);
-        // });
+        GoRouter.of(context).push('/category/${widget.category.id}');
       },
       onHover: (value) {
         setState(() {
           _isHover = value;
-          print(_isHover);
         });
       },
       child: AnimatedContainer(
@@ -77,18 +73,20 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                     child: Image.asset(
-                      'assets/icons/truck.png',
-                      color: _isHover ? widget.color : Colors.white,
+                      'assets/icons/cat_icon_${(widget.index%2)+1}.png',
+                      color: _isHover ? null :
+                      widget.index % 2 == 0? null:
+                      Colors.white,
                       width: _isHover ? 150 : 100,
                     ),
                   ),
-
                   Text(
-                    "Warning lamps",
+                    widget.category.name,
                     style: TextStyle(
                       fontSize: 16,
                       color: _isHover ? Colors.black54 : Colors.white,
                     ),
+                    maxLines: 1,
                   ),
                   Container(
                     width: 150,

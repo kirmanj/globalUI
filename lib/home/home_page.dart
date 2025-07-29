@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sunpower_website/home/widgets/about_us.dart';
+import 'package:sunpower_website/home/widgets/download_app.dart';
 import 'package:sunpower_website/home/widgets/features_section_widgets.dart';
+import 'package:sunpower_website/home/widgets/footer.dart';
 import 'package:sunpower_website/home/widgets/home_app_bar.dart';
 import 'package:sunpower_website/home/widgets/main_categories_widget.dart';
 
@@ -54,30 +56,40 @@ class _HomePageState extends State<HomePage> {
             controller: _scrollController,
             children: [
               Stack(children: [HomePageImageSlider(), SubPageAppBar()]),
-
-              // SubPageAppBar(),
-              /*SliverPersistentHeader(
-                pinned: true,
-                delegate: _StickyHeaderDelegate(
-                  minHeight: 60.0,
-                  maxHeight: 60.0,
-                  child: Container(
-                    color: Colors.red,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Second Top Section",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),*/
               AboutUs(),
               MainCategoriesWidget(),
               FeaturesSectionWidgets(),
               VisionSectionWidget(),
+              DownloadApp(),
+              FooterWidget(),
               Container(
-                height: 1500,
-                //color: Color.fromARGB(255, 242, 242, 242),
+                color: Color.fromARGB(255, 242, 242, 242),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text.rich(
+                        TextSpan(
+                          text: "Powered by ",
+                          style: TextStyle(
+                            fontSize: 18
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "GUIDEWARE",
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                              ),
+                            )
+                          ]
+                        ),
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

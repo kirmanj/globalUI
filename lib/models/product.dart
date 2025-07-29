@@ -120,4 +120,8 @@ class Product {
   int get hashCode => id.hashCode;
 
 
+  dynamic operator [](String key) {
+    return doc[key];
+  }
+
 }

@@ -29,10 +29,11 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
+    double imageHeight = width * 0.6;
     return Column(
       children: [
         SizedBox(
-          height: height * 0.8,
+          height: imageHeight,
           width: width,
           child: Stack(
             children: [
@@ -71,6 +72,7 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
                           key: ValueKey<int>(_currentIndex),
                           fit: BoxFit.cover,
                           width: double.infinity,
+                      height: imageHeight,
                         ),
               ),
               Positioned(
@@ -124,15 +126,15 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 4),
         SizedBox(
-          height: height * 0.2,
+          height: height * 0.15,
           width: width,
           child: ListView.builder(
             itemCount: imgList.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return GestureDetector(
+              return InkWell(
                 onTap: () {
                   setState(() {
                     _currentIndex = index;
@@ -141,7 +143,7 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
                 },
                 child: Container(
                   width: width / imgList.length,
-                  margin: const EdgeInsets.symmetric(horizontal: 2.0),
+                  margin: const EdgeInsets.symmetric(horizontal: 0.5),
                   child: Image.asset(imgList[index], fit: BoxFit.cover),
                 ),
               );

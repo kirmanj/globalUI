@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sunpower_website/utils/brands_service.dart';
 
 import 'firebase_options.dart';
 import 'home/home_page.dart';
@@ -10,6 +11,7 @@ import 'utils/AppColors.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  BrandsService.init();
   runApp(MyApp());
 }
 
@@ -24,15 +26,18 @@ class MyApp extends StatelessWidget {
           builder: (context,state){
               return HomePage();
             },
-          routes: [
-            GoRoute(
-                path: 'products',
-                builder: (context,state){
-                  return ProductListPage(backgroundColor: state.extra as Color,);
-                }
-            )
-          ]
-        )
+        ),
+        GoRoute(
+            path: '/category/:id',
+            builder: (context,state){
+              String? id = state.pathParameters['id'];
+              String? subCategory = state.uri.queryParameters['subCategory'];
+              return ProductListPage(
+                id: id,
+                subCategory: subCategory,
+              );
+            }
+        ),
       ]
   );
 

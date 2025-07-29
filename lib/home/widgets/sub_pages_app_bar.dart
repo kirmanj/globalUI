@@ -89,18 +89,9 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
                                 )
                             )
                         ),
-                        AppBarButton(name: 'Home',),
+                        AppBarButton(name: 'Home',onPressed: (){},),
                         //AppBarButton(name: 'About Us',),
-                        AppBarButton(name: 'Contact Us',),
-                        AppBarButton(
-                          name: 'Products',
-                          onPressed: (){
-                            GoRouter.of(context).push('/products');
-                            // Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                            //   return ProductListPage();
-                            // }));
-                          },
-                        ),
+                        AppBarButton(name: 'Contact Us',onPressed: (){}),
                       ],
                     ),
                   ),
@@ -137,6 +128,8 @@ class _AppBarButtonState extends State<AppBarButton> {
         TextButton(
             onPressed: widget.onPressed,
             onHover: (value){
+              print("onHover");
+              print(value);
               setState(() {
                 hovered = value;
               });

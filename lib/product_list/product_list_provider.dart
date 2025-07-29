@@ -7,10 +7,25 @@ class ProductListProvider extends ChangeNotifier{
 
   final productsCollection = FirebaseFirestore.instance.collection('products');
   List<Product>? products;
+  bool working = false;
 
-  getProducts() async {
+  getProducts(String categoryId,{bool reset = false}) async {
+
+    if(reset){
+      products = null;
+      working = true;
+      notifyListeners();
+    }
+    if(products != null && products!.length % 15 != 0){
+      return;
+    }
+    products ??= [];
+
+    //"477d53d0-bda6-11ed-af13-1569568464b7"
     var result = await productsCollection
-        .where("categoryID",isEqualTo: "477d53d0-bda6-11ed-af13-1569568464b7")
+        .where("categoryID", isEqualTo: categoryId)
+        .where('active',isEqualTo: true)
+        .orderBy("itemCode", descending: false)
         .limit(30)
         .get();
 
