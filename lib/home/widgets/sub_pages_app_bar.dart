@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sunpower_website/home/widgets/image_slider.dart';
-import 'package:sunpower_website/product_list/product_list_page.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'package:sunpower_website/home/widgets/search_filed_home.dart';
 import 'package:sunpower_website/utils/AppColors.dart';
 import 'package:sunpower_website/widgets/social_media_button.dart';
 
 class SubPageAppBar extends StatefulWidget {
-  const SubPageAppBar({super.key});
+  final bool showSearch;
+  final ItemScrollController? scrollController;
+
+  const SubPageAppBar({super.key, this.scrollController,this.showSearch = false});
 
   @override
   State<SubPageAppBar> createState() => _SubPageAppBarState();
@@ -18,18 +21,13 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
     //final double toolBarHeight = 700;
     final double width = MediaQuery.of(context).size.width;
 
-    if (width < 550){
+    if (width < 550) {
       return Container(
         color: Colors.black,
         padding: EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-                "assets/icons/logo_icon.png",
-              width: 150,
-            )
-          ],
+          children: [Image.asset("assets/icons/logo_icon.png", width: 150)],
         ),
       );
     }
@@ -39,52 +37,47 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
         Positioned.fill(
           child: Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.black,Colors.transparent],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                )
+              gradient: LinearGradient(
+                colors: [Colors.black, Colors.transparent],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
             width: MediaQuery.of(context).size.width,
           ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.05,
-              vertical: 24
+            horizontal: MediaQuery.of(context).size.width * 0.05,
+            vertical: 24,
           ),
           child: Column(
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SocialMediaButton(
-                    socialType: 'Youtube',
-                    link: '',
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SocialMediaButton(socialType: 'Youtube', link: ''),
+                      const SizedBox(width: 24),
+                      SocialMediaButton(socialType: 'Facebook', link: ''),
+                    ],
                   ),
-                  const SizedBox(width: 24,),
-                  SocialMediaButton(
-                    socialType: 'Facebook',
-                    link: '',
-                  ),
+                  Expanded(child: SizedBox()),
+                  if(widget.showSearch)
+                    SearchFiledHome(),
                 ],
               ),
-              Divider(
-                thickness: 1.5,
-                color: Colors.white24,
-              ),
+              Divider(thickness: 1.5, color: Colors.white24),
               Row(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Image.asset(
-                        "assets/icons/logo_icon.png",
-                        width: 200,
-                      ),
+                      Image.asset("assets/icons/logo_icon.png", width: 200),
                     ],
                   ),
-                  const SizedBox(width: 48,),
+                  const SizedBox(width: 48),
                   Expanded(
                     flex: 2,
                     child: Wrap(
@@ -92,29 +85,86 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         IconButton(
-                            onPressed: (){
-                              GoRouter.of(context).go('/');
-                            },
-                            icon: Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                child: Center(
-                                    child: Icon(Icons.home,size: 16,color: Colors.white,)
-                                )
-                            )
+                          onPressed: () {
+                            GoRouter.of(context).go('/');
+                          },
+                          icon: Container(
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.home,
+                                size: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
                         ),
-                        AppBarButton(name: 'Home',onPressed: (){},),
-                        //AppBarButton(name: 'About Us',),
-                        AppBarButton(name: 'Contact Us',onPressed: (){}),
+                        AppBarButton(
+                          name: 'Home',
+                          onPressed: () {
+                            widget.scrollController!.jumpTo(
+                              index: 0,
+                            ); //jumpTo(0);
+                          },
+                        ),
+                        AppBarButton(
+                          name: 'About Us',
+                          onPressed: () {
+                            if (widget.scrollController != null) {
+                              widget.scrollController!.scrollTo(
+                                index: 1,
+                                duration: Duration(seconds: 1),
+                              );
+                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            }
+                          },
+                        ),
+                        AppBarButton(
+                          name: 'Categories',
+                          onPressed: () {
+                            if (widget.scrollController != null) {
+                              widget.scrollController!.scrollTo(
+                                index: 2,
+                                duration: Duration(seconds: 1),
+                              );
+                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            }
+                          },
+                        ),
+                        AppBarButton(
+                          name: 'Services',
+                          onPressed: () {
+                            if (widget.scrollController != null) {
+                              widget.scrollController!.scrollTo(
+                                index: 3,
+                                duration: Duration(seconds: 1),
+                              );
+                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            }
+                          },
+                        ),
+                        AppBarButton(
+                          name: 'Contact Us',
+                          onPressed: () {
+                            if (widget.scrollController != null) {
+                              widget.scrollController!.scrollTo(
+                                index: 6,
+                                duration: Duration(seconds: 1),
+                              );
+                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            }
+                          },
+                        ),
                       ],
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -122,18 +172,24 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
     );
   }
 }
+
 class AppBarButton extends StatefulWidget {
   final String name;
   final bool smallButton;
   final VoidCallback? onPressed;
-  const AppBarButton({super.key, required this.name, this.smallButton = false, this.onPressed});
+
+  const AppBarButton({
+    super.key,
+    required this.name,
+    this.smallButton = false,
+    this.onPressed,
+  });
 
   @override
   State<AppBarButton> createState() => _AppBarButtonState();
 }
 
 class _AppBarButtonState extends State<AppBarButton> {
-
   bool hovered = false;
 
   @override
@@ -141,31 +197,36 @@ class _AppBarButtonState extends State<AppBarButton> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        if(hovered)
-          AnimatedButtonWidget(height: 20, width: widget.name.length * 10 ),
-        TextButton(
-            onPressed: widget.onPressed,
-            onHover: (value){
-              print("onHover");
-              print(value);
-              setState(() {
-                hovered = value;
-              });
-            },
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white, // Text color
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5), // Corner radius
-              ),
+        if (hovered)
+          PositionedDirectional(
+            start: 0,
+            end: 0,
+            child: AnimatedButtonWidget(
+              height: 20,
+              width: widget.name.length * 10,
             ),
-            child: Text(
-              widget.name,
-              style: TextStyle(
-                fontWeight: FontWeight.normal,
-                color: Colors.white,
-                fontSize: widget.smallButton ? 12 : 18
-              ),
-            )
+          ),
+        TextButton(
+          onPressed: widget.onPressed,
+          onHover: (value) {
+            setState(() {
+              hovered = value;
+            });
+          },
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white, // Text color
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5), // Corner radius
+            ),
+          ),
+          child: Text(
+            widget.name,
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+              color: Colors.white,
+              fontSize: widget.smallButton ? 12 : 18,
+            ),
+          ),
         ),
       ],
     );
@@ -176,7 +237,11 @@ class AnimatedButtonWidget extends StatefulWidget {
   final double height;
   final double width;
 
-  const AnimatedButtonWidget({super.key, required this.height, required this.width});
+  const AnimatedButtonWidget({
+    super.key,
+    required this.height,
+    required this.width,
+  });
 
   @override
   State<AnimatedButtonWidget> createState() => _AnimatedButtonWidgetState();
@@ -187,21 +252,12 @@ class _AnimatedButtonWidgetState extends State<AnimatedButtonWidget> {
 
   @override
   void initState() {
-    print("initState");
     super.initState();
-
-    print("Future.delayed");
-    Future.delayed(Duration(milliseconds: 100)).then((value){
-      print("Future.delayed done");
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
       _start = false;
-      if(mounted){
-
-        setState(() {
-
-        });
+      if (mounted) {
+        setState(() {});
       }
-
-
     });
   }
 
@@ -209,13 +265,11 @@ class _AnimatedButtonWidgetState extends State<AnimatedButtonWidget> {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       height: _start ? 0 : widget.height,
-        width: widget.width,
-        duration: Duration(
-            milliseconds: 100
-        ),
+      width: 500, //widget.width,
+      duration: Duration(milliseconds: 100),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.circular(5)
+        borderRadius: BorderRadius.circular(5),
       ),
     );
   }

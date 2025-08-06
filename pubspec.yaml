@@ -41,6 +41,9 @@ dependencies:
   provider: ^6.1.5
   crypto: ^3.0.6
   shimmer_animation: ^2.1.0
+  scrollable_positioned_list: ^0.3.8
+  url_launcher: ^6.3.2
+  algoliasearch: ^1.35.0
 
 dev_dependencies:
   flutter_test:

@@ -6,6 +6,7 @@ import 'package:sunpower_website/utils/brands_service.dart';
 import 'firebase_options.dart';
 import 'home/home_page.dart';
 import 'product_list/product_list_page.dart';
+import 'search_product_list/search_products_result.dart';
 import 'utils/AppColors.dart';
 
 void main() async {
@@ -38,6 +39,15 @@ class MyApp extends StatelessWidget {
               );
             }
         ),
+        GoRoute(
+          path: '/search/:searchKey',
+          builder: (context,state){
+            String? searchKey = state.pathParameters['searchKey']??"";
+            return SearchProductsResult(
+              searchKey: searchKey,
+            );
+          }
+        )
       ]
   );
 

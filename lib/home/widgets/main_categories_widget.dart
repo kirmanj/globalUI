@@ -32,7 +32,7 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
     return ChangeNotifierProvider<CategoriesProvider>.value(
       value: categoriesProvider,
       child: SizedBox(
-        height: height * 1.2,
+        // height: height * 1.2,
         child: LayoutBuilder(
           builder: (context, constraints) {
             int itemCount = 6;
@@ -57,7 +57,6 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
                 if(snapshot.categories == null){
                   return _mainCategoriesLoader(itemCount,aspectRatio,15);
                 }
-
                 return GridView.builder(
                   itemCount: snapshot.categories!.length,
                   shrinkWrap: true,

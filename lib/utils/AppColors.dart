@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class AppColors {
   static Color primaryColor = Color(0xFFF58020);
 
@@ -18,7 +20,8 @@ class AppColors {
     Color(0xfff4991d),
     Color(0xffa26537),
     Color(0xfffb62c7),
-    Color(0xffffffff),
+    Colors.grey
+    // Color(0xffffffff),
   ];
 }
 

@@ -7,6 +7,7 @@ import 'package:sunpower_website/product_list/product_list_provider.dart';
 import 'package:sunpower_website/utils/AppColors.dart';
 import 'package:sunpower_website/utils/helper.dart';
 import 'package:sunpower_website/widgets/product_card.dart';
+import 'package:sunpower_website/widgets/product_type.dart';
 import 'package:sunpower_website/widgets/sub_category_card.dart';
 import '../home/widgets/home_app_bar.dart';
 import '../home/widgets/sub_pages_app_bar.dart';
@@ -29,6 +30,7 @@ class _ProductListPageState extends State<ProductListPage> {
 
   bool _showSecondSection = false;
   String? selectedCategory;
+  String? selectedType;
 
   @override
   void initState() {
@@ -49,7 +51,6 @@ class _ProductListPageState extends State<ProductListPage> {
   }
 
   void _onScroll() {
-    print(_scrollController.offset);
     if (_scrollController.offset > 150 && !_showSecondSection) {
       setState(() {
         _showSecondSection = true;
@@ -79,7 +80,9 @@ class _ProductListPageState extends State<ProductListPage> {
               child: ListView(
                 controller: _scrollController,
                 children: [
-                  SubPageAppBar(),
+                  SubPageAppBar(
+                    showSearch: false,
+                  ),
                   Consumer2<CategoriesProvider,ProductListProvider>(
                     builder: (context,categorySnapshot,productSnapshot,child) {
                       if(categorySnapshot.category == null){
@@ -92,6 +95,9 @@ class _ProductListPageState extends State<ProductListPage> {
                       List<Product> filteredList = productSnapshot.products!;
                       if(selectedCategory != null){
                         filteredList = productSnapshot.products!.where((element){return element.subCategory == selectedCategory;}).toList();
+                      }
+                      if(selectedType != null){
+                        filteredList = filteredList.where((element) => element.type == selectedType || element.type == 'Both').toList();
                       }
                       return Padding(
                         padding: EdgeInsets.symmetric(
@@ -185,6 +191,83 @@ class _ProductListPageState extends State<ProductListPage> {
                                               ),
                                             ),
                                           ),
+                                          Divider(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 0,
+                                                horizontal: 8
+                                            ),
+                                            child: Text(
+                                              "Product Type",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8,
+                                                vertical: 16
+                                            ),
+                                            child: GridView.count(
+                                              crossAxisCount: 2,
+                                              crossAxisSpacing: 8,
+                                              shrinkWrap:true,
+                                              children: [
+                                                ProductTypeWidget(
+                                                  type: 'Car',
+                                                  onClick: (String name) {
+                                                    if(name == selectedType){
+                                                      setState(() {
+                                                        selectedType = null;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        selectedType = name;
+                                                      });
+                                                    }
+                                                  },
+                                                  isSelected: selectedType == 'Car',
+                                                ),
+                                                ProductTypeWidget(
+                                                  type: 'Truck',
+                                                  onClick: (String name) {
+                                                    if(name == selectedType){
+                                                      setState(() {
+                                                        selectedType = null;
+                                                      });
+                                                    } else {
+                                                      setState(() {
+                                                        selectedType = name;
+                                                      });
+                                                    }
+                                                  },
+                                                  isSelected: selectedType == 'Truck',
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Divider(
+                                            color: Colors.grey.shade300,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 0,
+                                                horizontal: 8
+                                            ),
+                                            child: Text(
+                                              "Sub Categories",
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600
+                                              ),
+                                            ),
+                                          ),
                                           GridView.builder(
                                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: filterChildCount,
@@ -262,7 +345,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                           GridView.builder(
                                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                                 crossAxisCount: childCount,
-                                                childAspectRatio: 0.8,
+                                                childAspectRatio: 0.73,
                                                 crossAxisSpacing: 16,
                                                 mainAxisSpacing: 16
                                             ),

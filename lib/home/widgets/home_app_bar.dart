@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:sunpower_website/home/widgets/sub_pages_app_bar.dart';
 import 'package:sunpower_website/utils/AppColors.dart';
 import 'package:sunpower_website/widgets/social_media_button.dart';
 
 class AppBarSubView extends StatefulWidget {
-  const AppBarSubView({super.key});
+  final ItemScrollController? scrollController;
+
+  const AppBarSubView({super.key, this.scrollController});
 
   @override
   State<AppBarSubView> createState() => _AppBarSubViewState();
@@ -14,12 +17,11 @@ class AppBarSubView extends StatefulWidget {
 class _AppBarSubViewState extends State<AppBarSubView> {
   @override
   Widget build(BuildContext context) {
+    // final width = MediaQuery.of(context).size.width;
+
     return Container(
       height: 90.0,
       color: Colors.black87,
-      // decoration: BoxDecoration(
-      //   color:
-      // ),
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.05,
@@ -72,8 +74,66 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         ),
                       ),
                       AppBarButton(name: 'Home', smallButton: true),
-                      // AppBarButton(name: 'About Us', smallButton: true),
-                      AppBarButton(name: 'Contact Us', smallButton: true),
+                      AppBarButton(
+                        name: 'About Us',
+                        smallButton: true,
+                        onPressed: () {
+                          if (widget.scrollController != null) {
+                            widget.scrollController!
+                            .scrollTo(index: 1, duration: Duration(seconds: 1));
+                            // .animateTo(
+                            //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
+                            //   duration: Duration(seconds: 1),
+                            //   curve: Curves.linear,
+                            // );
+                          }
+                        },
+                      ),
+                      AppBarButton(
+                        name: 'Categories',
+                        smallButton: true,
+                        onPressed: () {
+                          if (widget.scrollController != null) {
+                            widget.scrollController!
+                            .scrollTo(index: 2, duration: Duration(seconds: 1));
+                            // .animateTo(
+                            //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
+                            //   duration: Duration(seconds: 1),
+                            //   curve: Curves.linear,
+                            // );
+                          }
+                        },
+                      ),
+                      AppBarButton(
+                        name: 'Services',
+                        smallButton: true,
+                        onPressed: () {
+                          if (widget.scrollController != null) {
+                            widget.scrollController!
+                            .scrollTo(index: 3, duration: Duration(seconds: 1));
+                            // .animateTo(
+                            //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
+                            //   duration: Duration(seconds: 1),
+                            //   curve: Curves.linear,
+                            // );
+                          }
+                        },
+                      ),
+                      AppBarButton(
+                        name: 'Contact Us',
+                        smallButton: true,
+                        onPressed: () {
+                          if (widget.scrollController != null) {
+                            widget.scrollController!
+                            .scrollTo(index: 6, duration: Duration(seconds: 1));
+                            // .animateTo(
+                            //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
+                            //   duration: Duration(seconds: 1),
+                            //   curve: Curves.linear,
+                            // );
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ],

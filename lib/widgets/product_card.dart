@@ -189,7 +189,7 @@ class ProductCard extends StatelessWidget {
                       productListSnapShot['nameA'].toString().toUpperCase():*/
                       productListSnapShot['name'].toString().toUpperCase()
                       ,
-                      style: TextStyle(fontSize: 11,),
+                      style: TextStyle(fontSize: 14,),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -214,7 +214,7 @@ class ProductCard extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 35,
+                          width: 45,
                           child: BrandsService.getBrandImage(productListSnapShot['brand']).isNotEmpty?
                           Image.network(BrandsService.getBrandImage(productListSnapShot['brand'])):null,
                         ),

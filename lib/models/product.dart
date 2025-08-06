@@ -19,6 +19,7 @@ class Product {
   bool isNew;
   bool newArrival;
   bool active;
+  String type;
 
   Product({
     required this.name,
@@ -37,6 +38,7 @@ class Product {
     required this.isNew,
     required this.newArrival,
     required this.active,
+    this.type = 'Both',
     this.subCategory,
     this.oldPrice
   });
@@ -60,7 +62,8 @@ class Product {
       isNew: (doc.data()! as Map)['isNew']??false,
       newArrival: (doc.data()! as Map)['newArrival']??false,
       active: (doc.data()! as Map)['active']??false,
-      subCategory: (doc.data()! as Map)['subCategory']
+      subCategory: (doc.data()! as Map)['subCategory'],
+      type: (doc.data()! as Map)['type']??"Both"
     );
   }
 

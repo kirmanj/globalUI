@@ -18,7 +18,7 @@ class AboutUs extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: (width * 0.18).clamp(8.0, 100.0),
+        horizontal: horizontalPadding,//(width * 0.2).clamp(8.0, 200.0),
         vertical: 8,
       ),
       child: SingleChildScrollView(

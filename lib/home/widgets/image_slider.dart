@@ -29,7 +29,7 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    double imageHeight = width * 0.6;
+    double imageHeight = width * 0.4;
     return Column(
       children: [
         SizedBox(
@@ -128,7 +128,7 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
         ),
         const SizedBox(height: 4),
         SizedBox(
-          height: height * 0.15,
+          height: (width / imgList.length) * 7.5/16,
           width: width,
           child: ListView.builder(
             itemCount: imgList.length,
@@ -143,6 +143,7 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
                 },
                 image: Container(
                   width: width / imgList.length,
+                  height: (width / imgList.length) * 7.5/16,//height * 0.15,
                   margin: const EdgeInsets.symmetric(horizontal: 0.5),
                   child: Image.asset(imgList[index], fit: BoxFit.cover),
                 ),

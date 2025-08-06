@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class DownloadApp extends StatefulWidget {
   const DownloadApp({super.key});
@@ -41,7 +43,9 @@ class _DownloadAppState extends State<DownloadApp> {
                 Row(
                   children: [
                     InkWell(
-                      onTap:(){},
+                      onTap:(){
+                        _launchUrl("https://play.google.com/store/apps/details?id=com.sunpower.guideware");
+                      },
                       child: Image.asset(
                           "assets/icons/google_play.png",
                         width: 100,
@@ -49,7 +53,9 @@ class _DownloadAppState extends State<DownloadApp> {
                     ),
                     const SizedBox(width: 14,),
                     InkWell(
-                      onTap:(){},
+                      onTap:(){
+                        _launchUrl("https://apps.apple.com/us/app/auto-truck-store/id6444180377");
+                      },
                       child: Image.asset(
                         "assets/icons/app_store.png",
                         width: 100,
@@ -72,5 +78,11 @@ class _DownloadAppState extends State<DownloadApp> {
         ],
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrlString(url)) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

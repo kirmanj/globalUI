@@ -10,7 +10,6 @@ class ProductListProvider extends ChangeNotifier{
   bool working = false;
 
   getProducts(String categoryId,{bool reset = false}) async {
-
     if(reset){
       products = null;
       working = true;
@@ -21,7 +20,6 @@ class ProductListProvider extends ChangeNotifier{
     }
     products ??= [];
 
-    //"477d53d0-bda6-11ed-af13-1569568464b7"
     var result = await productsCollection
         .where("categoryID", isEqualTo: categoryId)
         .where('active',isEqualTo: true)

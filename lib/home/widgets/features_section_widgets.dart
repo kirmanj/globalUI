@@ -18,6 +18,7 @@ class _FeaturesSectionWidgetsState extends State<FeaturesSectionWidgets> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.15,
+          vertical: 75
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
