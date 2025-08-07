@@ -81,6 +81,18 @@ class _ProductListPageState extends State<ProductListPage> {
       backgroundColor: backgroundColor, //  Color(0xffe30f3a),
       body: Stack(
         children: [
+          Positioned(
+            right: width * 0.05,
+            top: height * 0.13,
+            child: SizedBox(
+              height: height * 0.3,
+              child: Image.asset(
+                'assets/icons/cat_icon_${(widget.index % 2) + 1}.png',
+                fit: BoxFit.fitHeight,
+                height: height * 0.3,
+              ),
+            ),
+          ),
           ChangeNotifierProvider<CategoriesProvider>.value(
             value: categoriesProvider,
             child: ChangeNotifierProvider<ProductListProvider>.value(
@@ -453,19 +465,6 @@ class _ProductListPageState extends State<ProductListPage> {
             left: 0,
             right: 0,
             child: AppBarSubView(),
-          ),
-
-          Positioned(
-            right: width * 0.05,
-            top: height * 0.13,
-            child: SizedBox(
-              height: height * 0.3,
-              child: Image.asset(
-                'assets/icons/cat_icon_${(widget.index % 2) + 1}.png',
-                fit: BoxFit.fitHeight,
-                height: height * 0.3,
-              ),
-            ),
           ),
         ],
       ),
