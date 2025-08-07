@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sunpower_website/utils/AppColors.dart';
+import 'package:autotruckstore/utils/AppColors.dart';
 
 class AboutUs extends StatelessWidget {
   const AboutUs({super.key});
@@ -18,7 +18,7 @@ class AboutUs extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: horizontalPadding,//(width * 0.2).clamp(8.0, 200.0),
+        horizontal: horizontalPadding, //(width * 0.2).clamp(8.0, 200.0),
         vertical: 8,
       ),
       child: SingleChildScrollView(
@@ -39,7 +39,7 @@ class AboutUs extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 36,
                           color: Color(0xff050505),
-                          fontWeight: FontWeight.normal
+                          fontWeight: FontWeight.normal,
                         ),
                       ),
                     ),
@@ -64,20 +64,28 @@ class AboutUs extends StatelessWidget {
               const SizedBox(height: 24),
               Text(
                 """The WAŚ Company is located in Poland’s fastest growing sub-region, Lower Silesia, and specialises in manufacturing lamps and retro-reflectors used in the automotive industry. We have been on the market since 1979, constantly developing our manufacturing processes and products we offer. We use the latest state-of-the-art technology in the industry so that we can provide innovative solutions for automotive lighting. We combine innovation with environmental awareness, attention to new trends and a thorough analysis of our customers' needs.""",
-                style: TextStyle(fontSize: 18, height: 1.8,color: Color(0xff6d747c)),
+                style: TextStyle(
+                  fontSize: 18,
+                  height: 1.8,
+                  color: Color(0xff6d747c),
+                ),
               ),
               const SizedBox(height: 12),
               Text(
                 "Please take a look at what we have to offer - choose one of the main categories below or use an advanced search engine.",
-                style: TextStyle(fontSize: 18, height: 1.8,color: Color(0xff6d747c)),
+                style: TextStyle(
+                  fontSize: 18,
+                  height: 1.8,
+                  color: Color(0xff6d747c),
+                ),
               ),
               const SizedBox(height: 68),
               Center(
                 child: Text(
-                  "10 Main Categories of Auto Truck Store".toUpperCase(),
+                  "15 Main Categories of Auto Truck Store".toUpperCase(),
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 62,
+                    fontSize: 42,
                     color: Color(0xff2d2d2d),
                     fontWeight: FontWeight.bold,
                   ),
@@ -87,10 +95,7 @@ class AboutUs extends StatelessWidget {
                 child: Text(
                   "Including more than 4618 lamps which are available in many variants",
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Color(0xff535353),
-                  ),
+                  style: TextStyle(fontSize: 36, color: Color(0xff535353)),
                 ),
               ),
               const SizedBox(height: 38),

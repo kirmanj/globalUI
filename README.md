@@ -1,6 +1,6 @@
-# sunpower_website
+# auto-truck-store
 
-Sunpower Flutter website
+Auto Truck Store Website
 
 ## Getting Started
 

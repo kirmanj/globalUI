@@ -1,6 +1,6 @@
 {
-    "name": "sunpower_website",
-    "short_name": "sunpower_website",
+    "name": "autotruckstore",
+    "short_name": "autotruckstore",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

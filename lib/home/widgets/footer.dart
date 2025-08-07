@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:sunpower_website/categories/categories_provider.dart';
-import 'package:sunpower_website/models/category.dart';
-import 'package:sunpower_website/utils/AppColors.dart';
+import 'package:autotruckstore/categories/categories_provider.dart';
+import 'package:autotruckstore/models/category.dart';
+import 'package:autotruckstore/utils/AppColors.dart';
 import 'dart:math' as math;
 
 class FooterWidget extends StatefulWidget {

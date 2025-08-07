@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:sunpower_website/widgets/image_button.dart';
+import 'package:autotruckstore/widgets/image_button.dart';
 
 class HomePageImageSlider extends StatefulWidget {
   const HomePageImageSlider({super.key});
@@ -21,151 +21,152 @@ class _HomePageImageSliderState extends State<HomePageImageSlider> {
   int _currentIndex = 0;
   int _animationIndex = 0;
 
-  final CarouselSliderController _carouselSliderController =
-      CarouselSliderController();
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
 
-    double imageHeight = width * 0.4;
-    return Column(
-      children: [
-        SizedBox(
-          height: imageHeight,
-          width: width,
-          child: Stack(
-            children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 800),
-                switchInCurve: Curves.easeInOut,
-                transitionBuilder: (child, animation) {
-                  if (_animationIndex == 0) {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: Offset(0, 1),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  } else if (_animationIndex == 1) {
-                    return MosaicImageReveal(
-                      key: ValueKey<int>(_currentIndex),
-                      imagePath: imgList[_currentIndex],
-                    );
-                  } else {
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: Offset(0, -1),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: child,
-                    );
-                  }
-                },
-                child:
-                    _animationIndex == 1
-                        ? const SizedBox.shrink()
-                        : Image.asset(
-                          imgList[_currentIndex],
-                          key: ValueKey<int>(_currentIndex),
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                      height: imageHeight,
+    double imageHeight = width * 0.8;
+    return SizedBox(
+      height: height,
+      child: Column(
+        children: [
+          SizedBox(
+            height: height * 0.8,
+            width: width,
+            child: Stack(
+              children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 800),
+                  switchInCurve: Curves.easeInOut,
+                  transitionBuilder: (child, animation) {
+                    if (_animationIndex == 0) {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: Offset(0, 1),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    } else if (_animationIndex == 1) {
+                      return MosaicImageReveal(
+                        key: ValueKey<int>(_currentIndex),
+                        imagePath: imgList[_currentIndex],
+                      );
+                    } else {
+                      return SlideTransition(
+                        position: Tween<Offset>(
+                          begin: Offset(0, -1),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      );
+                    }
+                  },
+                  child:
+                      _animationIndex == 1
+                          ? const SizedBox.shrink()
+                          : Image.asset(
+                            imgList[_currentIndex],
+                            key: ValueKey<int>(_currentIndex),
+                            fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: imageHeight,
+                          ),
+                ),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _currentIndex =
+                                (_currentIndex - 1 + imgList.length) %
+                                imgList.length;
+                            _animationIndex = (_animationIndex + 1) % 3;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_outlined,
+                          color: Colors.white,
+                          size: 50,
                         ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                bottom: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _currentIndex =
-                              (_currentIndex - 1 + imgList.length) %
-                              imgList.length;
-                          _animationIndex = (_animationIndex + 1) % 3;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.arrow_back_ios_outlined,
-                        color: Colors.white,
-                        size: 50,
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
-                right: 0,
-                top: 0,
-                bottom: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _currentIndex = (_currentIndex + 1) % imgList.length;
-                          _animationIndex = (_animationIndex + 1) % 3;
-                        });
-                      },
-                      icon: Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: Colors.white,
-                        size: 50,
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _currentIndex =
+                                (_currentIndex + 1) % imgList.length;
+                            _animationIndex = (_animationIndex + 1) % 3;
+                          });
+                        },
+                        icon: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: Colors.white,
+                          size: 50,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: 4),
-        SizedBox(
-          height: (width / imgList.length) * 7.5/16,
-          width: width,
-          child: ListView.builder(
-            itemCount: imgList.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return ButtonImage(
-                onTap: (){
-                  setState(() {
-                    _currentIndex = index;
-                    _animationIndex = (_animationIndex + 1) % 3;
-                  });
-                },
-                image: Container(
-                  width: width / imgList.length,
-                  height: (width / imgList.length) * 7.5/16,//height * 0.15,
-                  margin: const EdgeInsets.symmetric(horizontal: 0.5),
-                  child: Image.asset(imgList[index], fit: BoxFit.cover),
-                ),
-              );
+          SizedBox(height: height * 0.005),
+          SizedBox(
+            height: height * 0.195,
+            width: width,
+            child: ListView.builder(
+              itemCount: imgList.length,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return ButtonImage(
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = index;
+                      _animationIndex = (_animationIndex + 1) % 3;
+                    });
+                  },
+                  image: Container(
+                    width: width / imgList.length,
+                    height: height * 0.2, //height * 0.15,
+                    margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                    child: Image.asset(imgList[index], fit: BoxFit.cover),
+                  ),
+                );
 
-              return InkWell(
-                onTap: () {
-                  setState(() {
-                    _currentIndex = index;
-                    _animationIndex = (_animationIndex + 1) % 3;
-                  });
-                },
-                child: Container(
-                  width: width / imgList.length,
-                  margin: const EdgeInsets.symmetric(horizontal: 0.5),
-                  child: Image.asset(imgList[index], fit: BoxFit.cover),
-                ),
-              );
-            },
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      _currentIndex = index;
+                      _animationIndex = (_animationIndex + 1) % 3;
+                    });
+                  },
+                  child: Container(
+                    width: width / imgList.length,
+                    margin: const EdgeInsets.symmetric(horizontal: 0.5),
+                    child: Image.asset(imgList[index], fit: BoxFit.cover),
+                  ),
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

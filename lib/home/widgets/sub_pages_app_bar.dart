@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:sunpower_website/home/widgets/search_filed_home.dart';
-import 'package:sunpower_website/utils/AppColors.dart';
-import 'package:sunpower_website/widgets/social_media_button.dart';
+import 'package:autotruckstore/home/widgets/search_filed_home.dart';
+import 'package:autotruckstore/utils/AppColors.dart';
+import 'package:autotruckstore/widgets/social_media_button.dart';
 
 class SubPageAppBar extends StatefulWidget {
   final bool showSearch;
   final ItemScrollController? scrollController;
 
-  const SubPageAppBar({super.key, this.scrollController,this.showSearch = false});
+  const SubPageAppBar({
+    super.key,
+    this.scrollController,
+    this.showSearch = false,
+  });
 
   @override
   State<SubPageAppBar> createState() => _SubPageAppBarState();
@@ -64,8 +68,7 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
                     ],
                   ),
                   Expanded(child: SizedBox()),
-                  if(widget.showSearch)
-                    SearchFiledHome(),
+                  if (widget.showSearch) SearchFiledHome(),
                 ],
               ),
               Divider(thickness: 1.5, color: Colors.white24),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
-import 'package:sunpower_website/categories/categories_provider.dart';
-import 'package:sunpower_website/utils/AppColors.dart';
-import 'package:sunpower_website/utils/helper.dart';
-import 'package:sunpower_website/utils/site_constants.dart';
+import 'package:autotruckstore/categories/categories_provider.dart';
+import 'package:autotruckstore/utils/AppColors.dart';
+import 'package:autotruckstore/utils/helper.dart';
+import 'package:autotruckstore/utils/site_constants.dart';
 
 import 'category_card_widget.dart';
 
@@ -16,7 +16,6 @@ class MainCategoriesWidget extends StatefulWidget {
 }
 
 class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
-
   CategoriesProvider categoriesProvider = CategoriesProvider();
 
   @override
@@ -53,14 +52,15 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
             double aspectRatio = itemWidth / itemHeight;
 
             return Consumer<CategoriesProvider>(
-              builder: (context,snapshot,child) {
-                if(snapshot.categories == null){
-                  return _mainCategoriesLoader(itemCount,aspectRatio,15);
+              builder: (context, snapshot, child) {
+                if (snapshot.categories == null) {
+                  return _mainCategoriesLoader(itemCount, aspectRatio, 15);
                 }
                 return GridView.builder(
                   itemCount: snapshot.categories!.length,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(), // Prevent scroll
+                  physics:
+                      const NeverScrollableScrollPhysics(), // Prevent scroll
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: itemCount,
                     mainAxisSpacing: 1,
@@ -69,16 +69,17 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
                   ),
                   itemBuilder: (context, index) {
                     return CategoryCardWidget(
-                      color: AppColors.categories[
-                        index % AppColors.categories.length
-                        // Helper.uuidToNumber(snapshot.categories![index].id)
-                      ],
+                      color:
+                          AppColors.categories[index %
+                              AppColors.categories.length
+                          // Helper.uuidToNumber(snapshot.categories![index].id)
+                          ],
                       index: index,
                       category: snapshot.categories![index],
                     );
                   },
                 );
-              }
+              },
             );
           },
         ),
@@ -86,7 +87,7 @@ class _MainCategoriesWidgetState extends State<MainCategoriesWidget> {
     );
   }
 
-  Widget _mainCategoriesLoader(int itemCount,double aspectRatio,int count) {
+  Widget _mainCategoriesLoader(int itemCount, double aspectRatio, int count) {
     return GridView.builder(
       itemCount: count,
       shrinkWrap: true,

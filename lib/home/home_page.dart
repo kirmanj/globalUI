@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:sunpower_website/home/widgets/about_us.dart';
-import 'package:sunpower_website/home/widgets/download_app.dart';
-import 'package:sunpower_website/home/widgets/features_section_widgets.dart';
-import 'package:sunpower_website/home/widgets/footer.dart';
-import 'package:sunpower_website/home/widgets/home_app_bar.dart';
-import 'package:sunpower_website/home/widgets/main_categories_widget.dart';
+import 'package:autotruckstore/home/widgets/about_us.dart';
+import 'package:autotruckstore/home/widgets/download_app.dart';
+import 'package:autotruckstore/home/widgets/features_section_widgets.dart';
+import 'package:autotruckstore/home/widgets/footer.dart';
+import 'package:autotruckstore/home/widgets/home_app_bar.dart';
+import 'package:autotruckstore/home/widgets/main_categories_widget.dart';
 
 import 'widgets/image_slider.dart';
 import 'widgets/sub_pages_app_bar.dart';
@@ -20,18 +20,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // final ScrollController _scrollController = ScrollController();
-  final ScrollOffsetController scrollOffsetController = ScrollOffsetController();
-  final ScrollOffsetListener scrollOffsetListener = ScrollOffsetListener.create();
+  final ScrollOffsetController scrollOffsetController =
+      ScrollOffsetController();
+  final ScrollOffsetListener scrollOffsetListener =
+      ScrollOffsetListener.create();
   final ItemScrollController itemScrollController = ItemScrollController();
-  final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+  final ItemPositionsListener itemPositionsListener =
+      ItemPositionsListener.create();
   bool _showSecondSection = false;
 
   @override
   void initState() {
     super.initState();
     /*_scrollController.addListener(_onScroll);*/
-    scrollOffsetListener
-        .changes.listen((offset){
+    scrollOffsetListener.changes.listen((offset) {
       //print(offset);
       // print(itemPositionsListener.itemPositions.value.first.index);
       _onScroll();
@@ -59,11 +61,13 @@ class _HomePageState extends State<HomePage> {
   }*/
 
   void _onScroll() {
-    if (itemPositionsListener.itemPositions.value.first.index == 1 && !_showSecondSection) {
+    if (itemPositionsListener.itemPositions.value.first.index == 1 &&
+        !_showSecondSection) {
       setState(() {
         _showSecondSection = true;
       });
-    } else if (itemPositionsListener.itemPositions.value.first.index == 0 && _showSecondSection) {
+    } else if (itemPositionsListener.itemPositions.value.first.index == 0 &&
+        _showSecondSection) {
       setState(() {
         _showSecondSection = false;
       });
@@ -72,22 +76,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    List<Widget> items =  [
+    List<Widget> items = [
       Stack(
-          children: [
-            HomePageImageSlider(),
-            SubPageAppBar(
-              scrollController: itemScrollController,//_scrollController
-              showSearch: true,
-            )
-          ]
+        children: [
+          HomePageImageSlider(),
+          SubPageAppBar(
+            scrollController: itemScrollController, //_scrollController
+            showSearch: true,
+          ),
+        ],
       ),
       AboutUs(),
       MainCategoriesWidget(),
       FeaturesSectionWidgets(),
       VisionSectionWidget(),
+      SizedBox(height: 10),
       DownloadApp(),
+      SizedBox(height: 10),
       FooterWidget(),
       Container(
         color: Color.fromARGB(255, 242, 242, 242),
@@ -98,23 +103,21 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(12.0),
               child: Text.rich(
                 TextSpan(
-                    text: "Powered by ",
-                    style: TextStyle(
-                        fontSize: 18
+                  text: "Powered by ",
+                  style: TextStyle(fontSize: 18),
+                  children: [
+                    TextSpan(
+                      text: "GUIDEWARE",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    children: [
-                      TextSpan(
-                        text: "GUIDEWARE",
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold
-                        ),
-                      )
-                    ]
+                  ],
                 ),
                 style: TextStyle(fontSize: 18),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -126,7 +129,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           ScrollablePositionedList.builder(
             itemCount: items.length,
-            itemBuilder: (context,index){
+            itemBuilder: (context, index) {
               return items[index];
             },
             scrollOffsetController: scrollOffsetController,
@@ -147,7 +150,7 @@ class _HomePageState extends State<HomePage> {
             left: 0,
             right: 0,
             child: AppBarSubView(
-              scrollController: itemScrollController//_scrollController,
+              scrollController: itemScrollController, //_scrollController,
             ),
           ),
 
@@ -157,7 +160,10 @@ class _HomePageState extends State<HomePage> {
               right: 32,
               child: GestureDetector(
                 onTap: () {
-                  scrollOffsetController.animateScroll(offset: 0, duration: const Duration(milliseconds: 500),);
+                  scrollOffsetController.animateScroll(
+                    offset: 0,
+                    duration: const Duration(milliseconds: 500),
+                  );
                   //_scrollController.
                   // animateTo(
                   //   0,

@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sunpower_website/models/category.dart';
+import 'package:autotruckstore/models/category.dart';
 
 class CategoryCardWidget extends StatefulWidget {
   final Color color;
   final int index;
   final CategoryModel category;
-  const CategoryCardWidget({super.key, required this.color, required this.index, required this.category});
+  const CategoryCardWidget({
+    super.key,
+    required this.color,
+    required this.index,
+    required this.category,
+  });
 
   @override
   State<CategoryCardWidget> createState() => _CategoryCardWidgetState();
 }
 
 class _CategoryCardWidgetState extends State<CategoryCardWidget> {
-
   bool _isHover = false;
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return InkWell(
-      onTap: (){
-        GoRouter.of(context).push('/category/${widget.category.id}');
+      onTap: () {
+        GoRouter.of(
+          context,
+        ).push('/category/${widget.category.id}/${widget.index}');
       },
       onHover: (value) {
         setState(() {
@@ -73,10 +79,13 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
                     duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                     child: Image.asset(
-                      'assets/icons/cat_icon_${(widget.index%2)+1}.png',
-                      color: _isHover ? null :
-                      widget.index % 2 == 0? null:
-                      Colors.white,
+                      'assets/icons/cat_icon_${(widget.index % 2) + 1}.png',
+                      color:
+                          _isHover
+                              ? null
+                              : widget.index % 2 == 0
+                              ? null
+                              : Colors.white,
                       width: _isHover ? 150 : 100,
                     ),
                   ),

@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sunpower_website/utils/brands_service.dart';
+import 'package:autotruckstore/utils/brands_service.dart';
 
 import 'firebase_options.dart';
 import 'home/home_page.dart';
@@ -20,35 +20,36 @@ class MyApp extends StatelessWidget {
   MyApp({super.key});
 
   final GoRouter _router = GoRouter(
-      initialLocation: '/',
-      routes: [
-        GoRoute(
-          path: '/',
-          builder: (context,state){
-              return HomePage();
-            },
-        ),
-        GoRoute(
-            path: '/category/:id',
-            builder: (context,state){
-              String? id = state.pathParameters['id'];
-              String? subCategory = state.uri.queryParameters['subCategory'];
-              return ProductListPage(
-                id: id,
-                subCategory: subCategory,
-              );
-            }
-        ),
-        GoRoute(
-          path: '/search/:searchKey',
-          builder: (context,state){
-            String? searchKey = state.pathParameters['searchKey']??"";
-            return SearchProductsResult(
-              searchKey: searchKey,
-            );
-          }
-        )
-      ]
+    initialLocation: '/',
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) {
+          return HomePage();
+        },
+      ),
+      GoRoute(
+        path: '/category/:id/:index',
+        builder: (context, state) {
+          String? id = state.pathParameters['id'];
+          int index = int.tryParse(state.pathParameters['index'] ?? '0') ?? 0;
+          String? subCategory = state.uri.queryParameters['subCategory'];
+
+          return ProductListPage(
+            id: id,
+            index: index,
+            subCategory: subCategory,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/search/:searchKey',
+        builder: (context, state) {
+          String? searchKey = state.pathParameters['searchKey'] ?? "";
+          return SearchProductsResult(searchKey: searchKey);
+        },
+      ),
+    ],
   );
 
   // This widget is the root of your application.

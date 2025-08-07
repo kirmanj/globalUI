@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:sunpower_website/home/widgets/sub_pages_app_bar.dart';
-import 'package:sunpower_website/utils/AppColors.dart';
-import 'package:sunpower_website/widgets/social_media_button.dart';
+import 'package:autotruckstore/home/widgets/sub_pages_app_bar.dart';
+import 'package:autotruckstore/utils/AppColors.dart';
+import 'package:autotruckstore/widgets/social_media_button.dart';
 
 class AppBarSubView extends StatefulWidget {
   final ItemScrollController? scrollController;
@@ -79,8 +79,10 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         smallButton: true,
                         onPressed: () {
                           if (widget.scrollController != null) {
-                            widget.scrollController!
-                            .scrollTo(index: 1, duration: Duration(seconds: 1));
+                            widget.scrollController!.scrollTo(
+                              index: 1,
+                              duration: Duration(seconds: 1),
+                            );
                             // .animateTo(
                             //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
                             //   duration: Duration(seconds: 1),
@@ -94,8 +96,10 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         smallButton: true,
                         onPressed: () {
                           if (widget.scrollController != null) {
-                            widget.scrollController!
-                            .scrollTo(index: 2, duration: Duration(seconds: 1));
+                            widget.scrollController!.scrollTo(
+                              index: 2,
+                              duration: Duration(seconds: 1),
+                            );
                             // .animateTo(
                             //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
                             //   duration: Duration(seconds: 1),
@@ -109,8 +113,10 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         smallButton: true,
                         onPressed: () {
                           if (widget.scrollController != null) {
-                            widget.scrollController!
-                            .scrollTo(index: 3, duration: Duration(seconds: 1));
+                            widget.scrollController!.scrollTo(
+                              index: 3,
+                              duration: Duration(seconds: 1),
+                            );
                             // .animateTo(
                             //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
                             //   duration: Duration(seconds: 1),
@@ -124,8 +130,10 @@ class _AppBarSubViewState extends State<AppBarSubView> {
                         smallButton: true,
                         onPressed: () {
                           if (widget.scrollController != null) {
-                            widget.scrollController!
-                            .scrollTo(index: 6, duration: Duration(seconds: 1));
+                            widget.scrollController!.scrollTo(
+                              index: 6,
+                              duration: Duration(seconds: 1),
+                            );
                             // .animateTo(
                             //   width * 0.4 + (width / 5 * (9 / 16)) - 90,
                             //   duration: Duration(seconds: 1),

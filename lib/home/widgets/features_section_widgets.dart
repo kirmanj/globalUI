@@ -18,7 +18,7 @@ class _FeaturesSectionWidgetsState extends State<FeaturesSectionWidgets> {
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: MediaQuery.of(context).size.width * 0.15,
-          vertical: 75
+          vertical: 75,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -27,13 +27,13 @@ class _FeaturesSectionWidgetsState extends State<FeaturesSectionWidgets> {
               children: [
                 Text(
                   "What makes our offer unique",
-                  style: TextStyle(fontSize: 26, color: Color(0xff050505)),
+                  style: TextStyle(fontSize: 28, color: Color(0xff050505)),
                 ),
                 Divider(thickness: 1, height: 20, color: Color(0xffe8e8e8)),
                 Text(
                   "When choosing a business partner, you are interested in future cooperation. There are many factors which influence partner relations within businesses. Quality should not only be limited to the products that are offered, but experience, work culture and partners’ reviews are equally important. This policy enables us to build long-term relationships.",
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 16,
                     color: Color(0xff6d747c),
                     height: 1.7,
                   ),
@@ -41,7 +41,7 @@ class _FeaturesSectionWidgetsState extends State<FeaturesSectionWidgets> {
                 ),
               ],
             ),
-
+            SizedBox(height: height * 0.1),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
