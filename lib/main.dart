@@ -1,3 +1,4 @@
+import 'package:autotruckstore/product_details/product_details_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +27,25 @@ class MyApp extends StatelessWidget {
         path: '/',
         builder: (context, state) {
           return HomePage();
+        },
+      ),
+      GoRoute(
+        path: '/product/:id',
+        builder: (context, state) {
+          final String? id = state.pathParameters['id'];
+          return ProductDetailsPage(uid: id??"");
+        },
+      ),
+      GoRoute(
+        path: '/home',
+        builder: (context, state) {
+          String? posParam = state.uri.queryParameters['pos'];
+
+          int? pos = int.tryParse(posParam??"");
+          print(pos);
+          return HomePage(
+            pos: pos,
+          );
         },
       ),
       GoRoute(

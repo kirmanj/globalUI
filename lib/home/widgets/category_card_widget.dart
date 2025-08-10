@@ -25,9 +25,7 @@ class _CategoryCardWidgetState extends State<CategoryCardWidget> {
     double height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: () {
-        GoRouter.of(
-          context,
-        ).push('/category/${widget.category.id}/${widget.index}');
+        context.go('/category/${widget.category.id}/${widget.index}');
       },
       onHover: (value) {
         setState(() {

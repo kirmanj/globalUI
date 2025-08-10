@@ -12,7 +12,10 @@ import 'widgets/sub_pages_app_bar.dart';
 import 'widgets/vision_section_widget.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+
+  final int? pos;
+
+  const HomePage({super.key, this.pos});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -29,6 +32,8 @@ class _HomePageState extends State<HomePage> {
       ItemPositionsListener.create();
   bool _showSecondSection = false;
 
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -38,13 +43,21 @@ class _HomePageState extends State<HomePage> {
       // print(itemPositionsListener.itemPositions.value.first.index);
       _onScroll();
     });
+    if(widget.pos != null){
+      WidgetsBinding.instance.addPostFrameCallback((timestamp){
+        if(widget.pos == 1 || widget.pos == 2 || widget.pos == 3 || widget.pos == 6){
+          itemScrollController.scrollTo(index: widget.pos!, duration: Duration(milliseconds: 300));
+        }
+      });
+
+    }
+
   }
 
   @override
   void dispose() {
     /*_scrollController.removeListener(_onScroll);
     _scrollController.dispose();*/
-
     super.dispose();
   }
 
@@ -76,6 +89,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     List<Widget> items = [
       Stack(
         children: [
@@ -83,6 +97,7 @@ class _HomePageState extends State<HomePage> {
           SubPageAppBar(
             scrollController: itemScrollController, //_scrollController
             showSearch: true,
+            isHome: true,
           ),
         ],
       ),
@@ -124,7 +139,77 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Color.fromARGB(255, 242, 242, 242),
+      appBar: width < 600 ? AppBar(
+        backgroundColor: Colors.black,
+        title: Image.asset("assets/icons/logo_icon.png", width: 150),
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        // actions: [
+        //   IconButton(
+        //     onPressed: (){
+        //       _scaffoldKey.currentState!.openDrawer();
+        //     }, icon: Icon(Icons.menu,size: 16,color: Colors.white,))
+        // ],
+      ) : null ,
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: Column(
+          children: [
+            AppBarButton(
+              name: 'Home',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                itemScrollController.jumpTo(
+                  index: 0,
+                ); //jumpTo(0);
+              },
+            ),
+            AppBarButton(
+              name: 'About Us',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                itemScrollController.scrollTo(
+                  index: 1,
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
+            AppBarButton(
+              name: 'Categories',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                itemScrollController.scrollTo(
+                  index: 2,
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
+            AppBarButton(
+              name: 'Services',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                itemScrollController.scrollTo(
+                  index: 3,
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
+            AppBarButton(
+              name: 'Contact Us',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                itemScrollController.scrollTo(
+                  index: 6,
+                  duration: Duration(seconds: 1),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           ScrollablePositionedList.builder(
@@ -143,15 +228,17 @@ class _HomePageState extends State<HomePage> {
           //     children: items
           //   ),
           // ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-            top: _showSecondSection ? 0 : -90,
-            left: 0,
-            right: 0,
-            child: AppBarSubView(
-              scrollController: itemScrollController, //_scrollController,
-            ),
+
+          if(width >= 600)
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+              top: _showSecondSection ? 0 : -90,
+              left: 0,
+              right: 0,
+              child: AppBarSubView(
+                scrollController: itemScrollController, //_scrollController,
+              ),
           ),
 
           if (_showSecondSection)

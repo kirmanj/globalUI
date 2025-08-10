@@ -31,7 +31,7 @@ class _AppBarSubViewState extends State<AppBarSubView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              width: 200,
+              width: 100,
               child: Image.asset('assets/icons/logo_icon.png'),
             ),
             const SizedBox(width: 48),

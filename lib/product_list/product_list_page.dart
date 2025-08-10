@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:autotruckstore/categories/categories_provider.dart';
 import 'package:autotruckstore/models/category.dart';
@@ -31,6 +32,7 @@ class ProductListPage extends StatefulWidget {
 
 class _ProductListPageState extends State<ProductListPage> {
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _showSecondSection = false;
   String? selectedCategory;
@@ -77,8 +79,65 @@ class _ProductListPageState extends State<ProductListPage> {
 
     Color backgroundColor =
         AppColors.categories[Helper.uuidToNumber(widget.id ?? "")];
+
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: backgroundColor, //  Color(0xffe30f3a),
+      appBar: width < 600 ? AppBar(
+        backgroundColor: Colors.black,
+        title: Image.asset("assets/icons/logo_icon.png", width: 150),
+        iconTheme: IconThemeData(
+            color: Colors.white
+        ),
+        // actions: [
+        //   IconButton(
+        //       onPressed: (){
+        //         _scaffoldKey.currentState!.openDrawer();
+        //       }, icon: Icon(Icons.menu,size: 16,color: Colors.white,))
+        // ],
+      ) : null ,
+      drawer: Drawer(
+        backgroundColor: Colors.black,
+        child: Column(
+          children: [
+            AppBarButton(
+              name: 'Home',
+              onPressed: () {
+                // _scaffoldKey.currentState!.closeDrawer();
+                context.go('/home');
+              },
+            ),
+            AppBarButton(
+              name: 'About Us',
+              onPressed: () {
+                // _scaffoldKey.currentState!.closeDrawer();
+                context.go('/home?pos=1');
+              },
+            ),
+            AppBarButton(
+              name: 'Categories',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                context.go('/home?pos=2');
+              },
+            ),
+            AppBarButton(
+              name: 'Services',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                context.go('/home?pos=3');
+              },
+            ),
+            AppBarButton(
+              name: 'Contact Us',
+              onPressed: () {
+                _scaffoldKey.currentState!.closeDrawer();
+                context.go('/home?pos=6');
+              },
+            ),
+          ],
+        ),
+      ),
       body: Stack(
         children: [
           Positioned(
@@ -430,9 +489,14 @@ class _ProductListPageState extends State<ProductListPage> {
                                               vertical: 16,
                                             ),
                                             itemBuilder: (context, index) {
-                                              return ProductCard(
-                                                productListSnapShot:
-                                                    filteredList[index],
+                                              return InkWell(
+                                                onTap: (){
+                                                  context.go('/product/${filteredList[index].id}');
+                                                },
+                                                child: ProductCard(
+                                                  productListSnapShot:
+                                                      filteredList[index],
+                                                ),
                                               );
                                             },
                                             itemCount: filteredList.length,
@@ -449,7 +513,6 @@ class _ProductListPageState extends State<ProductListPage> {
                       );
                     },
                   ),
-
                   SizedBox(
                     height: 200,
                     //color: Color.fromARGB(255, 242, 242, 242),
@@ -458,14 +521,15 @@ class _ProductListPageState extends State<ProductListPage> {
               ),
             ),
           ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-            top: _showSecondSection ? 0 : -90,
-            left: 0,
-            right: 0,
-            child: AppBarSubView(),
-          ),
+          if(width >= 600)
+            AnimatedPositioned(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeIn,
+              top: _showSecondSection ? 0 : -90,
+              left: 0,
+              right: 0,
+              child: AppBarSubView(),
+            ),
         ],
       ),
     );

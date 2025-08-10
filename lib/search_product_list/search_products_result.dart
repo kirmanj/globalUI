@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:autotruckstore/home/widgets/home_app_bar.dart';
 import 'package:autotruckstore/home/widgets/sub_pages_app_bar.dart';
@@ -115,8 +116,13 @@ class _SearchProductsResultState extends State<SearchProductsResult> {
                               vertical: 16,
                             ),
                             itemBuilder: (context, index) {
-                              return ProductCard(
-                                productListSnapShot: value.products![index],
+                              return InkWell(
+                                onTap: (){
+                                  context.go('/product/${value.products![index].id}');
+                                },
+                                child: ProductCard(
+                                  productListSnapShot: value.products![index],
+                                ),
                               );
                             },
                             itemCount: value.products!.length,

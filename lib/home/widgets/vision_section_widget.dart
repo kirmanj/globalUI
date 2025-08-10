@@ -19,15 +19,12 @@ class _VisionSectionWidgetState extends State<VisionSectionWidget> {
         builder: (context, constrains) {
           bool isSmall = constrains.maxWidth < SITE_MIN_WIDTH;
           bool isMid = !isSmall && constrains.maxWidth < SITE_MAX_WIDTH;
-          return Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(
-                  'assets/images/backWeb2.jpg',
-                  fit: BoxFit.none,
-                ),
-              ),
-            ],
+          return AspectRatio(
+            aspectRatio: 2.7,
+            child: Image.asset(
+              'assets/images/backWeb2.jpg',
+              fit: BoxFit.cover,
+            ),
           );
           if (constrains.maxWidth < SITE_MIN_WIDTH) {
             return AspectRatio(

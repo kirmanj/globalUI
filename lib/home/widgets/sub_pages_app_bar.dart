@@ -8,11 +8,13 @@ import 'package:autotruckstore/widgets/social_media_button.dart';
 class SubPageAppBar extends StatefulWidget {
   final bool showSearch;
   final ItemScrollController? scrollController;
+  final bool isHome;
 
   const SubPageAppBar({
     super.key,
     this.scrollController,
     this.showSearch = false,
+    this.isHome = false
   });
 
   @override
@@ -25,15 +27,17 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
     //final double toolBarHeight = 700;
     final double width = MediaQuery.of(context).size.width;
 
-    if (width < 550) {
-      return Container(
+
+    if (width < 600) {
+      return const SizedBox();
+      /*return Container(
         color: Colors.black,
         padding: EdgeInsets.all(16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [Image.asset("assets/icons/logo_icon.png", width: 150)],
         ),
-      );
+      );*/
     }
 
     return Stack(
@@ -110,56 +114,80 @@ class _SubPageAppBarState extends State<SubPageAppBar> {
                         AppBarButton(
                           name: 'Home',
                           onPressed: () {
-                            widget.scrollController!.jumpTo(
-                              index: 0,
-                            ); //jumpTo(0);
+                            if(widget.isHome){
+                              widget.scrollController!.jumpTo(
+                                index: 0,
+                              );
+                            }
+                            else {
+                              context.go("/home");
+                            }
                           },
                         ),
                         AppBarButton(
                           name: 'About Us',
                           onPressed: () {
-                            if (widget.scrollController != null) {
-                              widget.scrollController!.scrollTo(
-                                index: 1,
-                                duration: Duration(seconds: 1),
-                              );
-                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            if(widget.isHome){
+                              if (widget.scrollController != null) {
+                                widget.scrollController!.scrollTo(
+                                  index: 1,
+                                  duration: Duration(seconds: 1),
+                                );
+                              }
                             }
+                            else {
+                              context.go("/home?pos=1");
+                            }
+
                           },
                         ),
                         AppBarButton(
                           name: 'Categories',
                           onPressed: () {
-                            if (widget.scrollController != null) {
-                              widget.scrollController!.scrollTo(
-                                index: 2,
-                                duration: Duration(seconds: 1),
-                              );
-                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            if(widget.isHome){
+                              if (widget.scrollController != null) {
+                                widget.scrollController!.scrollTo(
+                                  index: 2,
+                                  duration: Duration(seconds: 1),
+                                );
+                              }
                             }
+                            else {
+                              context.go("/home?pos=2");
+                            }
+
                           },
                         ),
                         AppBarButton(
                           name: 'Services',
                           onPressed: () {
-                            if (widget.scrollController != null) {
-                              widget.scrollController!.scrollTo(
-                                index: 3,
-                                duration: Duration(seconds: 1),
-                              );
-                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            if(widget.isHome) {
+                              if (widget.scrollController != null) {
+                                widget.scrollController!.scrollTo(
+                                  index: 3,
+                                  duration: Duration(seconds: 1),
+                                );
+                              }
+                            }
+                            else {
+                              context.go("/home?pos=3");
                             }
                           },
                         ),
                         AppBarButton(
                           name: 'Contact Us',
                           onPressed: () {
-                            if (widget.scrollController != null) {
-                              widget.scrollController!.scrollTo(
-                                index: 6,
-                                duration: Duration(seconds: 1),
-                              );
-                              // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                            if(widget.isHome){
+                              if (widget.scrollController != null) {
+                                widget.scrollController!.scrollTo(
+                                  index: 6,
+                                  duration: Duration(seconds: 1),
+                                );
+                                // .animateTo(width * 0.4 + (width/5 * (9/16)) - 90, duration: Duration(seconds: 1), curve: Curves.linear);
+                              }
+                            }
+                            else {
+                              context.go("/home?pos=6");
                             }
                           },
                         ),

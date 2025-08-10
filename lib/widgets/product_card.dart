@@ -132,150 +132,177 @@
 import 'package:flutter/material.dart';
 import 'package:autotruckstore/models/product.dart';
 import 'package:autotruckstore/utils/brands_service.dart';
+import 'package:flutter/services.dart';
 
 class ProductCard extends StatelessWidget {
   final Product productListSnapShot;
-  const ProductCard({Key? key, required this.productListSnapShot})
-    : super(key: key);
+  const ProductCard({super.key, required this.productListSnapShot});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.black12),
-        boxShadow: [
-          BoxShadow(color: Colors.grey[200]!, spreadRadius: 1, blurRadius: 10),
-        ],
-      ),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(1),
-            child: ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              child: AspectRatio(
-                aspectRatio: 1.6,
-                child: SizedBox(
-                  child:
-                      productListSnapShot['images'].isEmpty
-                          ? Image.asset(
-                            "images/category/emptyimg.png",
-                            fit: BoxFit.contain,
-                          )
-                          : Image.network(
-                            productListSnapShot['images'][0].toString(),
-                            fit: BoxFit.cover,
-                          ),
+    return Stack(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: Colors.black12),
+            boxShadow: [
+              BoxShadow(color: Colors.grey[200]!, spreadRadius: 1, blurRadius: 10),
+            ],
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(1),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  child: AspectRatio(
+                    aspectRatio: 1.6,
+                    child: SizedBox(
+                      child:
+                          productListSnapShot['images'].isEmpty
+                              ? Image.asset(
+                                "images/category/emptyimg.png",
+                                fit: BoxFit.contain,
+                              )
+                              : Image.network(
+                                productListSnapShot['images'][0].toString(),
+                                fit: BoxFit.cover,
+                              ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    /*AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                      productListSnapShot['nameK'].toString().toUpperCase():
-                      AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                      productListSnapShot['nameA'].toString().toUpperCase():*/
-                    productListSnapShot['name'].toString().toUpperCase(),
-                    style: TextStyle(fontSize: 14),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  Row(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Text(
-                              '${_getPrice(productListSnapShot)} \$',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            if (_getOldPrice(productListSnapShot).isNotEmpty &&
-                                _getOldPrice(productListSnapShot) != '0' &&
-                                _getOldPrice(productListSnapShot) != '0.0')
-                              Padding(
-                                padding: EdgeInsetsDirectional.only(start: 4),
-                                child: Text(
-                                  '${_getOldPrice(productListSnapShot)}\$',
+                      Text(
+                        /*AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                          productListSnapShot['nameK'].toString().toUpperCase():
+                          AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                          productListSnapShot['nameA'].toString().toUpperCase():*/
+                        productListSnapShot['name'].toString().toUpperCase(),
+                        style: TextStyle(fontSize: 14),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Text(
+                                  '${_getPrice(productListSnapShot)} \$',
                                   style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.red,
+                                    fontSize: 16,
+                                    color: Colors.blue,
                                     fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.lineThrough,
                                   ),
                                 ),
+                                if (_getOldPrice(productListSnapShot).isNotEmpty &&
+                                    _getOldPrice(productListSnapShot) != '0' &&
+                                    _getOldPrice(productListSnapShot) != '0.0')
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.only(start: 4),
+                                    child: Text(
+                                      '${_getOldPrice(productListSnapShot)}\$',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.bold,
+                                        decoration: TextDecoration.lineThrough,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            width: 45,
+                            child:
+                                BrandsService.getBrandImage(
+                                      productListSnapShot['brand'],
+                                    ).isNotEmpty
+                                    ? Image.network(
+                                      BrandsService.getBrandImage(
+                                        productListSnapShot['brand'],
+                                      ),
+                                    )
+                                    : null,
+                          ),
+                        ],
+                      ),
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Item code",
+                                    // AppLocalizations.of(context).trans("ItemCode"),
+                                    style: TextStyle(fontSize: 10),
+                                  ),
+                                  const SizedBox(width: 2),
+                                  Flexible(
+                                    child: Text(
+                                      productListSnapShot['itemCode'].toString(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
                           ],
                         ),
                       ),
-                      SizedBox(
-                        width: 45,
-                        child:
-                            BrandsService.getBrandImage(
-                                  productListSnapShot['brand'],
-                                ).isNotEmpty
-                                ? Image.network(
-                                  BrandsService.getBrandImage(
-                                    productListSnapShot['brand'],
-                                  ),
-                                )
-                                : null,
-                      ),
                     ],
                   ),
-                  Flexible(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              Text(
-                                "Item code",
-                                // AppLocalizations.of(context).trans("ItemCode"),
-                                style: TextStyle(fontSize: 10),
-                              ),
-                              const SizedBox(width: 8),
-                              Flexible(
-                                child: Text(
-                                  productListSnapShot['itemCode'].toString(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        PositionedDirectional(
+          end: 12,
+            top: 12,
+            child: IconButton(
+              style: IconButton.styleFrom(
+                backgroundColor: Colors.black12,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(200)
+                )
+              ),
+                onPressed: (){
+                  Clipboard.setData(ClipboardData(text: 'https://autotruckstore.com/product/${productListSnapShot.id}'));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text("Share link copied!"),
+                        duration: Duration(seconds: 1),
+                      ),
+
+                  );
+                },
+                icon: Icon(Icons.share,size: 18,)
+            )
+        )
+      ],
     );
   }
 
