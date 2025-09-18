@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 class AppColors {
@@ -20,8 +18,7 @@ class AppColors {
     Color(0xfff4991d),
     Color(0xffa26537),
     Color(0xfffb62c7),
-    Colors.grey
+    Colors.grey,
     // Color(0xffffffff),
   ];
 }
-

@@ -1,6 +1,6 @@
-# auto-truck-store
+# global-sports-market
 
-Auto Truck Store Website
+Global Sports Market
 
 ## Getting Started
 
